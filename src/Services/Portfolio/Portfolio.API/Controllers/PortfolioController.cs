@@ -1,4 +1,6 @@
+using System.Net;
 using Microsoft.AspNetCore.Mvc;
+using Portfolio.API.Models;
 using Portfolio.API.Repositories;
 
 namespace Portfolio.API.Controllers;
@@ -8,6 +10,85 @@ namespace Portfolio.API.Controllers;
 public class PortfolioController(IPortfolioRepository portfolioRepository, ILogger<PortfolioController> logger)
     : ControllerBase
 {
-    private readonly IPortfolioRepository _portfolioRepository = portfolioRepository ?? throw new ArgumentNullException(nameof(portfolioRepository));
-    private readonly ILogger<PortfolioController> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+    private readonly IPortfolioRepository _portfolioRepository = 
+        portfolioRepository ?? throw new ArgumentNullException(nameof(portfolioRepository));
+    private readonly ILogger<PortfolioController> _logger = 
+        logger ?? throw new ArgumentNullException(nameof(logger));
+
+    [HttpGet(Name = "GetCarouselItems")]
+    [ProducesResponseType(typeof(IEnumerable<CarouselItem>), (int)HttpStatusCode.OK)]
+    [ProducesResponseType((int)HttpStatusCode.NoContent)]
+    public async Task<ActionResult<IEnumerable<CarouselItem>>> GetCarouselItems()
+    {
+        try
+        {
+            // retrive all carousel items from database
+            var carouselItems = await _portfolioRepository.GetCarouselItems();
+            if (!carouselItems.Any())
+            {
+                _logger.LogWarning("No carousel item found!");
+                return NoContent();
+            }
+            return Ok(carouselItems);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Something went wrong inside GetCarouselItems action: {ex.Message}");
+            return StatusCode(500, "Internal server error");
+        }
+    }
+    
+    [HttpPost(Name = "AddCarousel")]
+    [ProducesResponseType((int)HttpStatusCode.Created)]
+    [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+    public async Task<IActionResult> AddCarousel([FromForm] CarouselItem carouselItem)
+    {
+        // check if Image file is empty
+        if (carouselItem.Image == null || carouselItem.Image.Length == 0)
+        {
+            return BadRequest("An image file is required.");
+        }
+
+        // check modelstate validity
+        if (!ModelState.IsValid)
+        {
+            return BadRequest("Somthing is wrong.");
+        }
+        
+        // check image extention is acceptable
+        var allowedExtensions = new[] { ".jpg", ".png" };
+        var extension = Path.GetExtension(carouselItem.Image.FileName).ToLowerInvariant();
+
+        if (string.IsNullOrEmpty(extension) || !allowedExtensions.Contains(extension))
+        {
+            return BadRequest("Invalid file type. Only jpg and png are allowed.");
+        }
+        
+        // check image size do not exceed
+        if (carouselItem.Image.Length > 10000000)
+        {
+            return BadRequest("The file size exceeds the limit.");
+        }
+        
+        try
+        {
+            // set path to save image on server
+            var filePath = Path.Combine("uploads", carouselItem.Image.FileName);
+            
+            // upload image on server
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await carouselItem.Image.CopyToAsync(stream);
+            }
+            
+            // add new carousel item to database
+            await _portfolioRepository.CreateCarouselItem(carouselItem);
+            return Created();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Something went wrong inside AddCarousel action: {ex.Message}");
+            return StatusCode(500, "Internal server error");
+        }
+    }
 }
