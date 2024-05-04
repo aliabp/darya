@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Portfolio.API.Data;
 using Portfolio.API.Repositories;
+using Portfolio.API.Services;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +24,7 @@ builder.Services.AddDbContext<AppDbContext>(
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IPortfolioRepository, PortfolioRepository>();
+builder.Services.AddScoped<IFileService, FileService>();
 
 var app = builder.Build();
 

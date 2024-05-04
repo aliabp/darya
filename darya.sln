@@ -8,6 +8,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Portfolio", "Portfolio", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portfolio.API", "src\Services\Portfolio\Portfolio.API\Portfolio.API.csproj", "{DD634B60-CE13-4F6D-84F5-65ECB4AA8CFF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portfolio.API.Test", "src\Services\Portfolio\Portfolio.API.Test\Portfolio.API.Test.csproj", "{F47054AC-8B69-4570-BDC8-E93892A3974B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,11 +19,16 @@ Global
 		{30AD7D35-DE58-46F1-995D-88B174700F0E} = {3FC6C21B-1A2F-43C3-9E5D-FD49AE4006A7}
 		{D7C97C3E-29E6-4473-8355-865025B13101} = {30AD7D35-DE58-46F1-995D-88B174700F0E}
 		{DD634B60-CE13-4F6D-84F5-65ECB4AA8CFF} = {D7C97C3E-29E6-4473-8355-865025B13101}
+		{F47054AC-8B69-4570-BDC8-E93892A3974B} = {D7C97C3E-29E6-4473-8355-865025B13101}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{DD634B60-CE13-4F6D-84F5-65ECB4AA8CFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DD634B60-CE13-4F6D-84F5-65ECB4AA8CFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD634B60-CE13-4F6D-84F5-65ECB4AA8CFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD634B60-CE13-4F6D-84F5-65ECB4AA8CFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F47054AC-8B69-4570-BDC8-E93892A3974B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F47054AC-8B69-4570-BDC8-E93892A3974B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F47054AC-8B69-4570-BDC8-E93892A3974B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F47054AC-8B69-4570-BDC8-E93892A3974B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

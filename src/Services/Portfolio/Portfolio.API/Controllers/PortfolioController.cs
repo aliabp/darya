@@ -2,14 +2,17 @@ using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Portfolio.API.Models;
 using Portfolio.API.Repositories;
+using Portfolio.API.Services;
 
 namespace Portfolio.API.Controllers;
 
 [ApiController]
 [Route("api/v1/[controller]")]
-public class PortfolioController(IPortfolioRepository portfolioRepository, ILogger<PortfolioController> logger)
-    : ControllerBase
+public class PortfolioController(IPortfolioRepository portfolioRepository, 
+    ILogger<PortfolioController> logger, IWebHostEnvironment environment, IFileService fileService) : ControllerBase
 {
+    private readonly IWebHostEnvironment _environment = environment;
+    private readonly IFileService _fileService = fileService;
     private readonly IPortfolioRepository _portfolioRepository = 
         portfolioRepository ?? throw new ArgumentNullException(nameof(portfolioRepository));
     private readonly ILogger<PortfolioController> _logger = 
@@ -74,16 +77,22 @@ public class PortfolioController(IPortfolioRepository portfolioRepository, ILogg
         {
             // set path to save image on server
             var filePath = Path.Combine("uploads", carouselItem.Image.FileName);
+            //var uploadsFolder = Path.Combine(_environment.WebRootPath, "uploads");
+            //Directory.CreateDirectory(filePath);
+
+            //var filePath = Path.Combine(uploadsFolder, $"{carouselItem.Image.FileName}");
             
             // upload image on server
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                await carouselItem.Image.CopyToAsync(stream);
-            }
+            //using (var stream = new FileStream(filePath, FileMode.Create))
+            //{
+                //await carouselItem.Image.CopyToAsync(stream);
+            //}
+            
+            await _fileService.SaveFileAsync(filePath, carouselItem.Image.OpenReadStream());
             
             // add new carousel item to database
             await _portfolioRepository.CreateCarouselItem(carouselItem);
-            return Created();
+            return Ok();
         }
         catch (Exception ex)
         {
