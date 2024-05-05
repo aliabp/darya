@@ -92,6 +92,7 @@ public class PortfolioController(IPortfolioRepository portfolioRepository,
             await _fileService.SaveFileAsync(filePath, carouselItem.Image.OpenReadStream());
             
             // add new carousel item to database
+            carouselItem.Path = filePath;
             await _portfolioRepository.CreateCarouselItem(carouselItem);
             return Ok();
         }

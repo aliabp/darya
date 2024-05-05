@@ -9,7 +9,7 @@ public class CarouselItem
     public string Id { set; get; } = Guid.NewGuid().ToString();
     public string Path { set; get; } = System.IO.Path.Combine("uploads", "default.png");
     [NotMapped]
-    public IFormFile Image { set; get; }
+    public IFormFile? Image { set; get; }
     public string Title { set; get; } = "No title";
     public string Caption { set; get; } = "Caption not found!";
     public int Order { set; get; } = 1;
