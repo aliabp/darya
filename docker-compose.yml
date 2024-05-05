@@ -1,0 +1,8 @@
+﻿services:
+  portfolio.api:
+    image: portfolio.api
+    build:
+      context: .
+      dockerfile: src/Services/Portfolio/Portfolio.API/Dockerfile
+volumes:
+  portfolio_data:

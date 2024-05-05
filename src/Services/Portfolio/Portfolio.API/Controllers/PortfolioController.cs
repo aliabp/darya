@@ -37,7 +37,8 @@ public class PortfolioController(IPortfolioRepository portfolioRepository,
         catch (Exception ex)
         {
             _logger.LogError($"Something went wrong inside GetCarouselItems action: {ex.Message}");
-            return StatusCode(500, "Internal server error");
+            //return StatusCode(500, "Internal server error");
+            return StatusCode(500, ex.Message);
         }
     }
     
@@ -97,7 +98,8 @@ public class PortfolioController(IPortfolioRepository portfolioRepository,
         catch (Exception ex)
         {
             _logger.LogError($"Something went wrong inside AddCarousel action: {ex.Message}");
-            return StatusCode(500, "Internal server error");
+            //return StatusCode(500, "Internal server error");
+            return StatusCode(500, ex.Message);
         }
     }
 }

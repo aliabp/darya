@@ -1,0 +1,11 @@
+services:
+  portfolio.api:
+    container_name: portfolio.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:PortfolioConnection=Server=ali-iran.goosfandezebel.site;Database=Portfolio;User Id=sa;Password=Sarzamin123;Encrypt=False;"
+    ports:
+      - "2000:8080"
+      - "2001:8081"
+    volumes:
+      - portfolio_data:/app/uploads
