@@ -4,5 +4,10 @@
     build:
       context: .
       dockerfile: src/Services/Portfolio/Portfolio.API/Dockerfile
+  portfolio.react:
+    image: portfolioreact
+    build:
+      context: .
+      dockerfile: src/Web/Portfolio.react/Dockerfile
 volumes:
   portfolio_data:

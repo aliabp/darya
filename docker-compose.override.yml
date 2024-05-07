@@ -9,3 +9,13 @@ services:
       - "2001:8081"
     volumes:
       - portfolio_data:/app/uploads
+
+  portfolio.react:
+    container_name: portfolio.react
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "2002:8080"
+      - "2003:8081"
+    volumes:
+      - portfolio_data:/app/uploads
