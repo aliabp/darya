@@ -1,5 +1,6 @@
 // Footer.js
 import React, { Component } from 'react';
+import {NavLink} from "react-router-dom";
 
 class Footer extends Component {
     
@@ -8,8 +9,7 @@ class Footer extends Component {
         return (
             <footer className="border-top footer text-muted">
                 <div className="container">
-                    &copy; 2024 - Ali - <a asp-area="" asp-controller="Home"
-                                                       asp-action="Index">Home</a>
+                    &copy; 2024 - Ali - <NavLink className="nav-link" to="/" activeClassName='active' exact>Home</NavLink>
                 </div>
             </footer>
         );

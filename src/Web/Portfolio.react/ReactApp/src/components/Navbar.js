@@ -1,26 +1,15 @@
 // Navbar.js
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 
 class Navbar extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            activeIndex: 0
-        };
-    }
-
-    handleItemClick = (index) => {
-        this.setState({ activeIndex: index });
-    }
-
     render() {
-        const menuItems = ['Home', 'Features', 'Pricing', 'Disabled'];
-
+        const menuItems = [{ name: 'Home', path: '/' }, { name: 'About', path: '/about' }];
         return (
             <header>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <div className="container-fluid">
-                    <a className="navbar-brand" href="#">Navbar</a>
+                    <a className="navbar-brand" href="#">Ali Babaei</a>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                             aria-label="Toggle navigation">
@@ -30,13 +19,14 @@ class Navbar extends Component {
                         <ul className="navbar-nav">
                             {menuItems.map((item, index) => (
                                 <li className="nav-item" key={index}>
-                                    <a className={`nav-link ${this.state.activeIndex === index ? 'active' : ''}`}
-                                       onClick={() => this.handleItemClick(index)}
-                                       href="#">
-                                        {item}
-                                    </a>
+                                    <NavLink className="nav-link"
+                                             to={item.path}
+                                             activeClassName='active'
+                                             exact>
+                                        {item.name}
+                                    </NavLink>
                                 </li>
-                            ))}
+                        ))}
                         </ul>
                     </div>
                 </div>
